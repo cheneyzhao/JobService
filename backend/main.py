@@ -68,8 +68,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="JobService Backend Service", 
-    description="sitedata Data Aggregation Service",
+    title="JobService", 
+    description="A robust backend service with job-based processing",
     version="1.0.0",
     lifespan=lifespan, 
     root_path="/backend"
@@ -83,14 +83,13 @@ app.include_router(api_router, prefix="/api/v1")
 @app.get("/")
 def root():
     return {
-        "message": "sitedata Data Aggregation Service",
+        "message": "A robust backend service with job-based processing",
         "version": "1.0.0",
         "features": [
             "Asynchronous Task Management",
             "Multi-Worker Concurrent Processing", 
             "Data Fetching and Transformation",
-            "Fault Tolerance Mechanism",
-            "Data Storage",
+            "Fault Tolerance Mechanism",           
             "Status Monitoring"
         ]
     }

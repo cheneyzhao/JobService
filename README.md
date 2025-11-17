@@ -1,6 +1,6 @@
-# JobService Backend - URL Data Aggregation Service
+# JobService - URL Data Aggregation Service
 
-A robust backend service with job-based processing capabilities, which processes and aggregates sitedata data from multiple sitedata providers, transforming it into a unified format with scoring.
+A robust service with job-based processing capabilities, which processes and aggregates data from multiple providers, transforming it into a unified format.
 
 ## 1. How to Run the Service
 
@@ -10,15 +10,12 @@ A robust backend service with job-based processing capabilities, which processes
 - MariaDB 11.8.2+
 - Redis 3.2.12+
 
-Recommend to setup MariaDB and Redis with Docker Compose for local development
-
-
 ### Quick Start
 
 **1. Clone and setup environment**:
    ```bash
-   git clone git@github.com:cheneyzhao/jobservice_backend.git
-   cd jobservice-backend
+   git clone git@github.com:cheneyzhao/JobService.git
+   cd JobService
    cp .env.example .env
    ```
 
@@ -36,8 +33,10 @@ Recommend to setup MariaDB and Redis with Docker Compose for local development
    
    # Redis Configuration
    REDIS_HOST=x.x.x.x
-   REDIS_PORT=xxxx
-   REDIS_DB=x
+   REDIS_PORT=6379
+   REDIS_DB=0
+   REDIS_DB_FOR_WORKER=0
+   REDIS_DB_FOR_CACHE=1
 
    # Timeout(seconds, 1-10) for request to the URL's API, default 5
    HTTP_TIMEOUT=x
@@ -85,20 +84,6 @@ For example:
 For example:
    - Backend API: http://localhost:8000/backend/docs
 
-### Alternative: Local Development
-
-```bash
-# Install dependencies
-cd backend
-pip install -r requirements.txt
-
-# Start backend server
-./start_backend_local.sh
-
-# Start Celery worker (in separate terminal)
-./start_worker_local.sh
-```
-
 ## 2. Architecture Overview
 
 ### Key Architectural Patterns And Layers
@@ -106,7 +91,7 @@ pip install -r requirements.txt
 - **Asynchronous Task Processing**: Celery-based job queue for handling long-running operations
 - **Job Coordinator Pattern**: Fetch external provider data concurrently and aggregate with main coordinator and worker tasks
 - **Data Transformation Layer**: Unified data format with provider-specific transformers
-- **Caching Layer**: Cache with TTL for improved performance
+- **Caching Layer**: Cache for improved performance
 - **Scheduler Layer**: Trigger the data fetching process automatically by the hour for a predefined sites
 - **Fault Tolerance**: Handle provider failures with partial success support
 
@@ -121,3 +106,4 @@ pip install -r requirements.txt
 3. **Operation and Monitoring**
    - Improve logger, job and cache monitoring
    - GUI with mangement of Cache, Workers and System Health check
+   - Test coverage
