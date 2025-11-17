@@ -1,0 +1,42 @@
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    networks:
+      - jobservice_net
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_DB_FOR_WORKER=${REDIS_DB_FOR_WORKER}
+      - REDIS_DB_FOR_CACHE=${REDIS_DB_FOR_CACHE}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - HTTP_PORT=${HTTP_PORT}
+      - HTTP_TIMEOUT=${HTTP_TIMEOUT}
+      - HTTP_RETRIES=${HTTP_RETRIES}
+
+  celery-worker:
+    build: ./backend
+    command: python -m workers.start_worker
+    container_name: celery-worker
+    networks:
+      - jobservice_net
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_DB_FOR_WORKER=${REDIS_DB_FOR_WORKER}
+      - REDIS_DB_FOR_CACHE=${REDIS_DB_FOR_CACHE}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - HTTP_PORT=${HTTP_PORT}
+      - HTTP_TIMEOUT=${HTTP_TIMEOUT}
+      - HTTP_RETRIES=${HTTP_RETRIES}
+      
+networks:
+  jobservice_net:

@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+httpx
+pytest
+pytest-asyncio
+celery[redis]
+redis
+sqlalchemy==2.0.23
+pymysql==1.1.0
+pydantic==2.5.0
+apscheduler==3.10.4

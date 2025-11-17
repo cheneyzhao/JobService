@@ -1,0 +1,12 @@
+[
+  {
+    "site_id": "news",
+    "date_strategy": "today",
+    "enabled": true,
+    "providers": {
+      "site_a":"http://a.com",
+      "site_b":"http://b.com"
+    },
+    "description": ""
+  }
+]
